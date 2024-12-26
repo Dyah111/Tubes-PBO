@@ -1,34 +1,29 @@
 import java.util.Date;
 
 class Reservasi {
-    private String id_reservasi;
+    private static int counter = 1;
+    private String idReservasi;
     private User user;
     private Dokter dokter;
     private Date tanggal;
-    private String time;
+    private String jam;
+    private JadwalDokter jadwal;
 
-    public Reservasi(String id_reservasi, User user, Dokter dokter, Date tanggal, String time) {
-        this.id_reservasi = id_reservasi;
+    public Reservasi(String idReservasi, User user, Dokter dokter, Date tanggal, String jam, JadwalDokter jadwal) {
+        this.idReservasi = "RSV-" + counter++;
         this.user = user;
         this.dokter = dokter;
         this.tanggal = tanggal;
-        this.time = time;
+        this.jam = jam;
+        this.jadwal = jadwal;
     }
 
-    public void confirmasiReservation() {
-
+    public String getidReservasi() {
+        return idReservasi;
     }
 
-    public void cancelReservasi() {
-        
-    }
-
-    public String getId_reservasi() {
-        return id_reservasi;
-    }
-
-    public void setId_reservasi(String id_reservasi) {
-        this.id_reservasi = id_reservasi;
+    public void setidReservasi(String idReservasi) {
+        this.idReservasi = idReservasi;
     }
 
     public User getUser() {
@@ -55,11 +50,24 @@ class Reservasi {
         this.tanggal = tanggal;
     }
 
-    public String getTime() {
-        return time;
+    public String getjam() {
+        return jam;
     }
 
-    public void setTime(String time) {
-        this.time = time;
+    public void setjam(String jam) {
+        this.jam = jam;
+    }
+
+    public JadwalDokter getJadwal() {
+        return jadwal;
+    }
+
+    public void setJadwal(JadwalDokter jadwal) {
+        this.jadwal = jadwal;
+    }
+
+    @Override
+    public String toString() {
+        return "Reservasi ID: " + idReservasi + ", User: " + user.getNama() + ", Dokter: " + dokter.getNama() + " (" + dokter.getSpesialisasi() + "), Jadwal: " + jadwal;
     }
 }

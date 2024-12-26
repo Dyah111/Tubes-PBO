@@ -1,7 +1,9 @@
+import java.util.*;
+
 class Dokter {
     private String id_dokter;
     private String nama;
-    private JadwalDokter jadwal;
+    private List<JadwalDokter> jadwalList;
     private String spesialisasi;
 
     public Dokter(String id_dokter, String namaDr, String spesialisasiDr) {
@@ -10,8 +12,23 @@ class Dokter {
         this.spesialisasi = spesialisasiDr;
     }
 
-    public void mengeditJadwalDokter() {
-        System.out.println("Jadwal dokter diedit.");
+    public void mengeditJadwalDokter(JadwalDokter jadwal) {
+        jadwalList.add(jadwal);
+        System.out.println("Jadwal dokter telah diedit.");
+    }
+
+    public void lihatJadwal() {
+        for (JadwalDokter jadwal : jadwalList) {
+            System.out.println(jadwal);
+        }
+    }
+
+    public List<JadwalDokter> getJadwalList() {
+        return jadwalList;
+    }
+
+    public void setJadwalList(List<JadwalDokter> jadwalList) {
+        this.jadwalList = jadwalList;
     }
 
     public String getId_dokter() {
@@ -30,20 +47,17 @@ class Dokter {
         this.nama = nama;
     }
 
-    public JadwalDokter getJadwal() {
-        return jadwal;
-    }
-
-    public void setJadwal(JadwalDokter jadwal) {
-        this.jadwal = jadwal;
-    }
-
     public String getSpesialisasi() {
         return spesialisasi;
     }
 
     public void setSpesialisasi(String spesialisasi) {
         this.spesialisasi = spesialisasi;
+    }
+
+    public void tambahJadwal(JadwalDokter jadwalDokter) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'tambahJadwal'");
     }
 
     

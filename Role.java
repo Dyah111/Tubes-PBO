@@ -1,22 +1,22 @@
 abstract class Role {
-    protected String nama_role;
+    protected String id_role;
     protected String nama;
     protected String email;
     protected String password;
 
-    public Role(String nama_role, String nama, String email, String password) {
-        this.nama_role = nama_role;
+    public Role(String id_role, String nama, String email, String password) {
+        this.id_role = id_role;
         this.nama = nama;
         this.email = email;
         this.password = password;
     }
 
-    public String getNama_role() {
-        return nama_role;
+    public String getid_role() {
+        return id_role;
     }
 
-    public void setNama_role(String nama_role) {
-        this.nama_role = nama_role;
+    public void setid_role(String id_role) {
+        this.id_role = id_role;
     }
 
     public String getNama() {

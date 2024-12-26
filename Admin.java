@@ -1,9 +1,17 @@
+import java.util.*;
+
 class Admin extends Role {
     private String id_admin;
 
     public Admin(String id_admin, String nama, String email, String password, String nama_role) {
         super(nama, email, password, nama_role = "Admin");
         this.id_admin = id_admin;
+    }
+
+    public void lihatReservasi(List<Reservasi> reservasiList) {
+        for (Reservasi r: reservasiList) {
+            System.out.println(r);
+        }
     }
 
     public String getId_admin() {
@@ -43,7 +51,7 @@ class Admin extends Role {
     }
 
     public void setRole(String role) {
-        this.nama_role = role;
+        this.id_role = role;
     }
 
 }
