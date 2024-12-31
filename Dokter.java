@@ -3,62 +3,49 @@ import java.util.*;
 class Dokter {
     private String id_dokter;
     private String nama;
-    private List<JadwalDokter> jadwalList;
-    private String spesialisasi;
+    private String spesialis;
+    private ArrayList<JadwalDokter> jadwal = new ArrayList<>();
+    private int currentAntrian = 1;
 
-    public Dokter(String id_dokter, String namaDr, String spesialisasiDr) {
+    public Dokter(String id_dokter, String nama, String spesialis) {
         this.id_dokter = id_dokter;
-        this.nama = namaDr;
-        this.spesialisasi = spesialisasiDr;
+        this.nama = nama;
+        this.spesialis = spesialis;
     }
 
-    public void mengeditJadwalDokter(JadwalDokter jadwal) {
-        jadwalList.add(jadwal);
-        System.out.println("Jadwal dokter telah diedit.");
-    }
-
-    public void lihatJadwal() {
-        for (JadwalDokter jadwal : jadwalList) {
-            System.out.println(jadwal);
-        }
-    }
-
-    public List<JadwalDokter> getJadwalList() {
-        return jadwalList;
-    }
-
-    public void setJadwalList(List<JadwalDokter> jadwalList) {
-        this.jadwalList = jadwalList;
-    }
-
-    public String getId_dokter() {
+    public String getIdDokter() {
         return id_dokter;
-    }
-
-    public void setId_dokter(String id_dokter) {
-        this.id_dokter = id_dokter;
     }
 
     public String getNama() {
         return nama;
     }
 
-    public void setNama(String nama) {
-        this.nama = nama;
+    public String getSpesialis() {
+        return spesialis;
     }
 
-    public String getSpesialisasi() {
-        return spesialisasi;
+    public void addJadwal(JadwalDokter jadwalDokter) {
+        jadwal.add(jadwalDokter);
+        System.out.println("Jadwal ditambahkan untuk Dokter: " + nama);
     }
 
-    public void setSpesialisasi(String spesialisasi) {
-        this.spesialisasi = spesialisasi;
+    public void showJadwal() {
+        System.out.println("Jadwal Dokter " + nama + ":");
+        for (JadwalDokter j : jadwal) {
+            System.out.println("Tanggal: " + j.getTanggal() + " | Jam: " + j.getJam() + " - " + j.getJamSelesai());
+        }
     }
 
-    public void tambahJadwal(JadwalDokter jadwalDokter) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'tambahJadwal'");
+    public ArrayList<JadwalDokter> getJadwal() {
+        return jadwal;
     }
 
-    
+    public int getNextAntrian(JadwalDokter jadwalDokter) {
+        Date now = new Date();
+        if (now.after(jadwalDokter.getEndDate())) {
+            currentAntrian = 1; // Reset antrian untuk hari berikutnya
+        }
+        return currentAntrian++;
+    }
 }

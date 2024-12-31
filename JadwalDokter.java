@@ -1,60 +1,35 @@
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 class JadwalDokter {
-    private String id_jadwal;
-    private String jam;
+    private String time;
+    private String timeSelesai;
     private Date tanggal;
-    private List<Reservasi> reservasiList;
 
-    public JadwalDokter(String id_jadwal, String jam, Date tanggal, Dokter dokter) {
-        this.id_jadwal = id_jadwal;
-        this.jam = jam;
+    public JadwalDokter(String time, String timeSelesai, Date tanggal) {
+        this.time = time;
+        this.timeSelesai = timeSelesai;
         this.tanggal = tanggal;
     }
 
-    public void addDokter(Dokter dokter) {
-        System.out.println("Dokter " + dokter.getNama() + " ditambahkan ke jadwal.");
+    public String getJam() {
+        return time;
     }
 
-    public void showJadwal() {
-        System.out.println("Menampilkan jadwal dokter.");
-    }
-
-    public void showDaftarDokter() {
-        System.out.println("Menampilkan daftar dokter.");
-    }
-
-    public List<JadwalDokter> getJadwalList() {
-        return getJadwalList();
-    }
-
-    public String getId_jadwal() {
-        return id_jadwal;
-    }
-
-    public void setId_jadwal(String id_jadwal) {
-        this.id_jadwal = id_jadwal;
-    }
-
-    public String getjam() {
-        return jam;
-    }
-
-    public void setjam(String jam) {
-        this.jam = jam;
+    public String getJamSelesai() {
+        return timeSelesai;
     }
 
     public Date getTanggal() {
         return tanggal;
     }
 
-    public void setTanggal(Date tanggal) {
-        this.tanggal = tanggal;
+    public Date getEndDate() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            return sdf.parse(new SimpleDateFormat("yyyy-MM-dd").format(tanggal) + " " + timeSelesai);
+        } catch (Exception e) {
+            return null;
+        }
     }
-
-    @Override
-    public String toString() {
-        return "Tanggal: " + tanggal + ", Jam: " + jam;
-    }
-
 }

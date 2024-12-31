@@ -1,76 +1,56 @@
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 class User extends Role {
     private String id_user;
     private Reservasi reservasi;
-    private List<Reservasi> reservasiList;
 
-    public User(String id_user, String nama, String email, String password, String nama_role) {
-        super(nama, email, password, nama_role = "User");
+    public User(String id_user, String nama, String email, String password) {
+        super(nama, email, password);
         this.id_user = id_user;
+        this.nama_role = "User";
     }
 
-    public void buatReservasi(Reservasi reservasi) {
-        reservasiList.add(reservasi);
-        System.out.println("Reservasi berhasil dibuat");
-    }
-
-    public void batalkanReservasi(String idReservasi) {
-        reservasiList.removeIf(r -> r.getidReservasi().equals(idReservasi));
-        System.out.println("Reservasi berhasil dibatalkan");
-    }
-
-    public void setReservasiList(List<Reservasi> reservasiList) {
-        this.reservasiList = reservasiList;
-    }
-
-    public void lihatReservasi() {
-        for (Reservasi r : reservasiList) {
-            System.out.println(r);
+    public void buatReservasi(ArrayList<Dokter> daftarDokter, Dokter dokter, String tanggalInput, String jam, String status) {
+        // Mengubah input tanggal menjadi objek Date
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date tanggalReservasi = null;
+        try {
+            tanggalReservasi = sdf.parse(tanggalInput);
+        } catch (Exception e) {
+            System.out.println("Tanggal tidak valid.");
+            return;
         }
-    }
-
-    public List<Reservasi> getReservasiList() {
-        return reservasiList;
-    }
-
-    public String getId_user() {
-        return id_user;
-    }
-
-    public void setId_user(String id_user) {
-        this.id_user = id_user;
-    }
-
-    public String getNama() {
-        return this.nama;
-    }
-
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRole() {
-        return this.getRole();
-    }
-
-    public void setRole(String role) {
-        this.id_role = role;
+    
+        // Memeriksa ketersediaan dokter pada tanggal yang dipilih dan jam yang diminta
+        JadwalDokter jadwalTersedia = null;
+        for (JadwalDokter jadwal : dokter.getJadwal()) {
+            // Mengonversi tanggal dari jadwal ke format "yyyy-MM-dd" tanpa jam dan menit
+            String jadwalTanggalStr = sdf.format(jadwal.getTanggal());
+            String tanggalReservasiStr = sdf.format(tanggalReservasi);
+    
+            // Jika tanggal sama, kita periksa apakah jam yang diminta cocok dengan jadwal
+            if (jadwalTanggalStr.equals(tanggalReservasiStr)) {
+                // Mengambil jam dari input user dan bandingkan dengan jam mulai jadwal dokter
+                if (jadwal.getJam().equals(jam)) {
+                    jadwalTersedia = jadwal;
+                    break;
+                }
+            }
+        }
+    
+        if (jadwalTersedia != null) {
+            int nomorAntrian = dokter.getNextAntrian(jadwalTersedia);
+            this.reservasi = new Reservasi("R" + (int)(Math.random() * 1000), id_user, dokter.getIdDokter(), tanggalReservasi, status, jadwalTersedia, nomorAntrian);
+            System.out.println("Reservasi berhasil dibuat untuk Dokter: " + dokter.getNama() + " dengan nomor antrian: " + nomorAntrian);
+            System.out.println("Detail Reservasi:");
+            System.out.println("Nama: " + this.nama);
+            System.out.println("Dokter: " + dokter.getNama() + " (" + dokter.getSpesialis() + ")");
+            System.out.println("Tanggal: " + new SimpleDateFormat("yyyy-MM-dd").format(tanggalReservasi));
+            System.out.println("Jam: " + jam);
+            System.out.println("Nomor Antrian: " + nomorAntrian);
+        } else {
+            System.out.println("Dokter tidak tersedia pada tanggal dan jam yang dipilih.");
+        }
     }
 }
